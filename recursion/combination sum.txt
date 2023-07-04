@@ -1,0 +1,43 @@
+class Solution {
+
+    void solve(vector<int>& candidates, vector<vector<int>>&ans, vector<int>&ds, int i, int target)
+    {
+        if(i<0 || target<0)return;
+        if(target==0)
+        {
+            ans.push_back(ds);
+            return;
+        }
+
+        ds.push_back(candidates[i]);
+        solve(candidates, ans, ds, i, target-candidates[i]);
+        ds.pop_back();
+
+        solve(candidates, ans, ds, i-1, target);
+
+        // for(int j=i;j>=0;j--)
+        // {
+        //     solve(candidates, ans, ds, i-1, target);
+        //     IF(j!=i && candidates[j]==candidates[i])continue;
+
+        //     ds.push_back(candidates[i]);
+        //     solve(candidates, ans, ds, i, target-candidates[i]);
+        //      ds.pop_back();
+        // }
+      
+    }
+
+public:
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>>ans;
+        vector<int>ds;
+
+        sort(candidates.begin(),candidates.end());
+
+        int n=candidates.size();
+
+        solve(candidates, ans, ds, n-1, target);
+
+        return ans;
+    }
+};
